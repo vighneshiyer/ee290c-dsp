@@ -1,0 +1,16 @@
+Answered:
+
+- What's the need for a bundle inside the IO? Can't we just have an IO instance at the top-level? Can we have multiple bundles inside one IO?
+    - Looks like I answered this for myself... there can be multiple bundles inside one IO instance -> that's the reason!
+- Why is there an implicit clock and reset input if there exist no state elements in the module? If state elements aren't ever reset, then only the clock would be necessary.
+    - Looks like this is actually deprecated in favor of modules explicitly stating whether they need a top-level clock or reset or both.
+
+Pending:
+
+- If there's an output which isn't sufficiently sized to receive the output of a arithmetic operation (ex ->
+    val out_add = Output(UInt(1.W))
+    io.out_add = 2.U + 4.U
+    1. Why does this compile without error OR warning? It looks like the bottom bit is taken of the result.
+    2. How do we catch mistakes like this?
+    Note: This is worse behavior than even Verilog which will at least give a lint warning.
+- In the Chisel operators example, the emitted Verilog doesn't directly translate from the RTL described in Chisel, even though a manual translation into Verilog would look very clean. Why does this Chisel obfuscation exist and is it possible to reduce it?
