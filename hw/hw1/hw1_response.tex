@@ -44,6 +44,23 @@ Assuming the Verilator compile time is insignificant compared to the simulation 
 The IPython notebooks and HTML are attached for bootcamp sections 1, 2.1, 2.2
 
 \section{Reading Notes}
+Summary with my commentary {\color{blue}in blue}.
 
+\subsection{Bachrach - DAC 2012 - Chisel: Constructing Hardware in a Scala Embedded Language}
+
+\begin{enumerate}
+\item Identifies issues with using Verilog/VHDL to write RTL descriptions of digital circuits
+    \begin{enumerate}
+        \item Originally designed as simulation languages so a strict synthesizable subset needs to be understood by the designer and tools. {\color{blue} This is an issue with any HDL as it evolves; there are useful non-syntheizable constructs that must exist along with the design to simplify simulation (magic memory loading/backdoors), formal verif (assert/assume), design assertions, print-based debugging (as used in DESSERT), register initialization (for GLS and maybe FPGAs), linting waivers, behavioral model stubbing, etc.}
+        \item Poor abstraction facilities compared to modern languages which leads to low reuse. {\color{blue} Modern SystemVerilog provides facilities for OOP, structs, interfaces, and many other niceties, but I agree Scala is more powerful even still. Whether reuse is limited by abstraction limitations is arguable.}
+        \item Verilog/VHDL aren't suited to creating generators to support design space exploration
+    \end{enumerate}
+\item To work around limitations of Verilog/VHDL metaprogramming layers and macros are often used. {\color{blue} Definetely true and a big problem.}
+\item Prior attempts at constructing a DSL to generate hardware (Esterel/Bluespec) are too domain specific (stream processing, guarded atomic actions) and don't map well to other hardware types. {\color{blue} I'm sure the Bluespec people would disagree. RTL isn't always the best abstraction either.}
+\item What is Chisel
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{enumerate}
 
 \end{document}
