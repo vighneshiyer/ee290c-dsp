@@ -14,25 +14,36 @@
 
 \section{Chisel Simulations}
 \begin{enumerate}
-    \item {\color{blue} Which backend would you use to run unit tests for a small block? Which backend would you use to run integration tests for a whole RISC-V core? Explain your answer.}
+\item {\color{blue} Which backend would you use to run unit tests for a small block? Which backend would you use to run integration tests for a whole RISC-V core? Explain your answer.}
 
-        Use the FIRRTL interpreter to test small blocks for small amounts of time, since it becomes much slower than Verilator for more than 1k cycles or even a moderately complex block. Use Verilator for testing large blocks (such as a whole RISC-V core) since its simulation speedup is much greater than its startup penalty.
+Use the FIRRTL interpreter to test small blocks for small amounts of time, since it becomes much slower than Verilator for more than 1k cycles or even a moderately complex block. Use Verilator for testing large blocks (such as a whole RISC-V core) since its simulation speedup is much greater than its startup penalty.
 
-    \item {\color{blue} You can compute a rough estimate of the “frequency” of a simulation by dividing the number of simulation cycles by simulation time. You shouldn’t include compilation and other start-up costs in this compilation time, so don’t forget to subtract that out from the total simulation time. Use the 10 cycle simulations as a rough estimate of compilation time and other startup costs. Roughly, what frequency does the interpreter and Verilator achieve for each design complexity?}
+\item {\color{blue} You can compute a rough estimate of the “frequency” of a simulation by dividing the number of simulation cycles by simulation time. You shouldn’t include compilation and other start-up costs in this compilation time, so don’t forget to subtract that out from the total simulation time. Use the 10 cycle simulations as a rough estimate of compilation time and other startup costs. Roughly, what frequency does the interpreter and Verilator achieve for each design complexity?}
 
-    For a 10 cycle simulation with a complexity of 51 taps, the startup time for the interpreter is 275 ms and for Verilator is 1426 ms.
+For a 10 cycle simulation with a complexity of 51 taps, the startup time for the interpreter is 275 ms and for Verilator is 1426 ms.
 
-    For the 10000 cycle simulation of same complexity:
+For the 10000 cycle simulation of same complexity:
 
-    \begin{align}
-        \text{Interpreter Speed} = \frac{10000}{(19510 - 275) \cdot 1e-3} &= 520 \text{ Hz} \nonumber \\
-        \text{Verilator Speed} = \frac{10000}{(1625 - 1426) \cdot 1e-3} &= 50 \text{ kHz} \nonumber
-    \end{align}
+\begin{align}
+    \text{Interpreter Speed} = \frac{10000}{(19510 - 275) \cdot 1\mathrm{e}{-3}} &= 520 \text{ Hz} \nonumber \\
+    \text{Verilator Speed} = \frac{10000}{(1625 - 1426) \cdot 1\mathrm{e}{-3}} &= 50 \text{ kHz} \nonumber
+\end{align}
 
-    \item {\color{blue} FPGAs can be a useful way to accelerate simulation. Let’s say that building and deploying a design for FPGA takes at least 15 minutes and will run at 10 MHz. Approximately how many cycles do you need to simulate for FPGA emulation to be worthwhile for this design?}
+\item {\color{blue} FPGAs can be a useful way to accelerate simulation. Let’s say that building and deploying a design for FPGA takes at least 15 minutes and will run at 10 MHz. Approximately how many cycles do you need to simulate for FPGA emulation to be worthwhile for this design?}
+
+Assuming the Verilator compile time is insignificant compared to the simulation time; let $V(c)$ be the time it takes to simulate $c$ cycles using Verilator, and $F(c)$ for FPGA.
+
+\begin{align}
+    V(c) = \frac{c}{50\mathrm{e}{3}} \nonumber \\
+    F(c) = 15 \cdot 60 + \frac{c}{10\mathrm{e}{6}} \nonumber \\
+    V(c) = F(c) \rightarrow c = 45 \text{M cycles} \nonumber
+\end{align}
 \end{enumerate}
 
 \section{Chisel Generator Bootcamp}
 The IPython notebooks and HTML are attached for bootcamp sections 1, 2.1, 2.2
+
+\section{Reading Notes}
+
 
 \end{document}
