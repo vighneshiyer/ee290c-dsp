@@ -80,5 +80,12 @@ The idea here makes a lot of sense, which is to formally define a hardware IR wh
 
 {\color{blue} This paper is great at presenting the motivation and some of the underlying details of FIRRTL, as well as showing a few evaluation results (although a few are unfair or ovbious comparisons). But I would like to see the question of what belongs in an IR addressed more thoroughly, and have this motivate what differentiates FIRRTL from Yosys's IR or PyVerilog's AST.}
 
-\subsection{}
+\subsection{Wang - DAC 2018 - ACED: A Hardware Library for Generating DSP Systems}
+
+The case is made that design of systems should be integrated than split across several tools, algorithms, and abstraction boundaries. The paper covers how the ACED library helps perform all the system design in Scala and can easily share info from high-level architecture evaluation to RTL generation. The use of the Scala type system to cleanly parameterize DSP modules is a clear advantage over using other HDLs. {\color{blue} I really like the diagrams in this paper.}
+
+The bitwidth optimization routines using interval types represent something that can only be done with a high-level language and transformation passes (impossible in Verilog without an external tool). The automatic bitwidth reduction passes are effective in trimming registers when the precision isn't necessary.
+
+{\color{blue} What struck me at the end was the generator result comparison between MATLAB, HLS, and ACED. If only looking at the area, HLS produced the best QoR. I would like to have seen timing slack comparisons between the generators. It is unclear if Vivado HLS performs any register trimming in the same way as ACED, or if it is just better at targetting FPGAs. In any event, I think the result is unsurprising; from what I've seen HLS is becoming very effective, especially in the DSP domain. It is mentioned that the result from HLS required specific pragmas and refactoring, but that may be OK if the total code size is much smaller, and if the problem is really the HLS tool generating sub-optimal schedules and resource allocation (that can be improved).}
+
 \end{document}
