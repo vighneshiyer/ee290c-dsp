@@ -59,8 +59,26 @@ Summary with my commentary {\color{blue}in blue}.
 \item Prior attempts at constructing a DSL to generate hardware (Esterel/Bluespec) are too domain specific (stream processing, guarded atomic actions) and don't map well to other hardware types. {\color{blue} I'm sure the Bluespec people would disagree. RTL isn't always the best abstraction either.}
 \item What is Chisel
     \begin{enumerate}
-        \item 
+        \item Simple, integrated into a modern language
+        \item Low-level hardware construction that can capture high-level design patterns
+        \item Generates code for multiple targets. {\color{blue} I think the C++ simulator has been deprecated since}
     \end{enumerate}
 \end{enumerate}
 
+The rest of the paper is an overview of what Chisel supports at the time. One thing I found interesting was the functional style used to describe various forms of hardware generation (foldR and map in FIR filter generation) and the module instantiation recursion used to generate a sorting circuit. {\color{blue} These are both not possible in Verilog/VHDL and represent an elegant way to create those circuits. Although Bluespec/C$\lambda$ash both support very similar, if not even more elegant ways to do this. Both are based on Haskell.}
+
+The paper makes a special point to mention the fast C++ simulator, which is now gone. I think this was a useful feature, although I'm not sure of how it compared with Verilator, and the new Treadle FIRRTL execution engine in terms of performance and usability. From the VCS result presented in the paper, the C++ simulation is much faster than I would expect Verilator to be; this is probably from the limited simulation support in Chisel vs Verilog's non-synthesizable constructs, since I expect VCS to have finely-tuned ILP optimizations too.
+
+It is unsurprising that Chisel compares similarly with Verilog in VLSI QoR since it operates at the same level of abstraction. A comparison with other DSL based approaches would be more interesting.
+
+\subsection{Izraelevitz - ICCAD 2017 - Reusability is FIRRTL Ground...}
+The idea here makes a lot of sense, which is to formally define a hardware IR which can be used to customize designs to specific targets and encourage reusability. The hardware IR is especially useful to write transforms for DFT/DFM, FPGA implementation (the double-pumped FPGA BRAM transform for many-ported memories is very neat), and constraint generation.
+
+{\color{blue} The major issue here is what belongs in the hardware IR. Do assertions, print statements, memory backdoors, etc belong there even though they aren't synthesizable? What about design or timing constraints (like for an async FIFO) that should be propagated to the synthesis tool? Do interfaces (bundles) belong in the IR as opposed to just separating the interface into wires?}
+
+{\color{blue} The other major issue is adoption. For FIRRTL to be "LLVM for hardware" it has to become commonly used, which requires an easy on-ramp for already written Verilog/VHDL. If design intent is lost or non-syntheizable constructs are stripped, this becomes more difficult.}
+
+{\color{blue} This paper is great at presenting the motivation and some of the underlying details of FIRRTL, as well as showing a few evaluation results (although a few are unfair or ovbious comparisons). But I would like to see the question of what belongs in an IR addressed more thoroughly, and have this motivate what differentiates FIRRTL from Yosys's IR or PyVerilog's AST.}
+
+\subsection{}
 \end{document}
