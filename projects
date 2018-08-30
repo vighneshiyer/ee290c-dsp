@@ -1,0 +1,5 @@
+- OFDM software radio (LTE,WIFI) / MIMO (Massive)
+- Bluetooth Modem (low power, BTLE)
+- GPS receiver (differential?)
+- SmartNIC (........, there are no real ideas here (that work with the existing RISC-V infra), except generic hardware offloading)
+- Wellness monitor
