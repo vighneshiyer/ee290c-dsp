@@ -3,3 +3,14 @@
 - GPS receiver (differential?)
 - SmartNIC (........, there are no real ideas here (that work with the existing RISC-V infra), except generic hardware offloading)
 - Wellness monitor
+- SDR with configurable hardware signal processing chain
+
+What I want to work on:
+- SDR with programmable data flow chain (hardened blocks with some programmability) and use them to create various radio processing chains
+    - NoC for inter-block communication
+    - Hook with Rocket cores (for synchronization and blocks which can't be offloaded into HW) and DRAM endpoints
+    - FPGA prototype which can stream IQ samples and even do in-circuit emulation with a SDR RF frontend (antenna, LNA, ADC w/ SERDES)
+    - Specific application to get working: atomic radio reception from WWVB, generic TX/RX (no protocol), Bluetooth
+    - FPGA <-> FPGA proof of concept (low frequency AM, FSK, PSK, BPSK, QPSK, QAM) generic transmission
+    - Look at GNURadio flow graphs for ideas on common ways blocks are assembled and what computation is involved
+        - https://www.gnuradio.org/doc/doxygen/page_ofdm.html
